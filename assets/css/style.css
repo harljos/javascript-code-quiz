@@ -1,0 +1,22 @@
+#countdown {
+    float: left;
+}
+
+section {
+    display: flex;
+    flex: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+p {
+    margin-left: 5%;
+    margin-right: 5%;
+    font-size: 22px;
+}
+
+button {
+    height: 50px;
+    width: 5%;
+}

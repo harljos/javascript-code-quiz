@@ -83,6 +83,15 @@ function btnClickCorrectQ3(btn) {
     });
 }
 
+function renderHighscores() {
+    var storedHighscores = JSON.parse(localStorage.getItem("highscores"));
+    for (var i = 0; i < storedHighscores.length; i++) {
+        var p = document.querySelector("p");
+        p.textContent = storedHighscores[i].initials + ": " + storedHighscores[i].score;
+        h1El.append(p);
+    }
+}
+
 // changes the elements on the page and creates question 1
 function makeQuestion1() {
     h1El.textContent = "What is NOT a common datatype in javascript";
@@ -150,7 +159,44 @@ function makeInputForm() {
 }
 
 function makeHighscores() {
+    h1El.textContent = "Highscores";
+    document.querySelector("input").remove();
+    document.querySelector("form").remove();
+    document.querySelector("button").remove();
+    var goBack = document.createElement("button");
+    var clear = document.createElement("button");
+    goBack.textContent = "go back";
+    clear.textContent = "clear highscores";
+    section.append(goBack);
+    section.append(clear);
+    renderHighscores();
+    goBack.addEventListener("click", function() {
+        makeStartScreen();
+    });
+    
+    clear.addEventListener("click", function() {
+        highscores.splice(0, highscores.length());
+        renderHighscores();
+    });
+}
 
+function makeStartScreen() {
+    timeLeft = 60;
+    questionIndex = 0;
+    for (var i = 0; i < 2; i++) {
+        document.querySelector("button").remove();
+    }
+    for (var i = 0; i < highscores.length; i++) {
+        document.querySelector("p").remove();
+    }
+    h1El.textContent = "Coding Quiz Challenge";
+    var p = document.createElement("p");
+    var btn = document.createElement("button");
+    p.textContent = "In the coding quiz challenge you will be given 5 multiple choice Javascript questions to answer within a time period. If you answer a question incorrectly time will be substraced from the timer. The time left on the timer at the end will be your score. Press Start when ready.";
+    btn.textContent = "Start";
+    btn.setAttribute("id", "start-button");
+    section.append(p);
+    section.append(btn);
 }
 
 function getInput() {
@@ -163,8 +209,8 @@ function getInput() {
             score: timeLeft,
         };
         highscores.push(highscore);
-        console.log(highscores);
         localStorage.setItem("highscores", JSON.stringify(highscores));
+        makeHighscores();
     });
 }
 
@@ -182,12 +228,6 @@ function question1Answer() {
     btnClickCorrectQ1(questionOptionC);
 
     btnClickWrongQ1(questionOptionD);
-    
-    // if (wrong) {
-    //     console.log("hello");
-    //     wrong = false;
-    //     question1Value = false;
-    // }
 }
 
 // checks what the users answer was for question 2
@@ -274,7 +314,7 @@ function countdown() {
 }
 
 // sends user to html page of the first javascript question
-startButtonEL.addEventListener("click", function() {
+document.querySelector("#start-button").addEventListener("click", function() {
     var timeInterval = setInterval(function() {
         timerEL.textContent = "Time: " + timeLeft;
         timeLeft--;

@@ -1,19 +1,30 @@
 var highscoreEl = document.querySelector("#stored-highscores");
 var clearHighscoresEl = document.querySelector("#clear");
 var goBackEl = document.querySelector("#go-back");
+highscores = [];
 
 // displays the highscores the page
 function displayHighscores() {
     var storedHighscores = JSON.parse(localStorage.getItem("highscores"));
-    for (var i = 0; i < storedHighscores.length; i++) {
+    for (var i = 0; i < highscores.length; i++) {
         var p = document.createElement("p");
         p.style.width = "100px";
-        p.textContent = storedHighscores[i].initials + ": " + storedHighscores[i].score;
+        p.textContent = highscores[i].initials + ": " + highscores[i].score;
         highscoreEl.append(p);
     }
 }
 
-displayHighscores();
+function init() {
+    var storedHighscores = JSON.parse(localStorage.getItem("highscores"));
+
+    if (storedHighscores !== null) {
+        highscores = storedHighscores;
+    }
+
+    displayHighscores();
+}
+
+init();
 
 // when you click go back it goes to index.html
 goBackEl.addEventListener("click", function() {

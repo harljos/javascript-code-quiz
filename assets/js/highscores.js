@@ -2,6 +2,7 @@ var highscoreEl = document.querySelector("#stored-highscores");
 var clearHighscoresEl = document.querySelector("#clear");
 var goBackEl = document.querySelector("#go-back");
 
+// displays the highscores the page
 function displayHighscores() {
     var storedHighscores = JSON.parse(localStorage.getItem("highscores"));
     for (var i = 0; i < storedHighscores.length; i++) {
@@ -14,6 +15,12 @@ function displayHighscores() {
 
 displayHighscores();
 
+// when you click go back it goes to index.html
 goBackEl.addEventListener("click", function() {
     location.href = "index.html";
+});
+
+// when you click clear highscores it clears highscores
+clearHighscoresEl.addEventListener("click", function() {
+    highscoreEl.innerHTML = "";
 });

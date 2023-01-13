@@ -83,14 +83,14 @@ function btnClickCorrectQ3(btn) {
     });
 }
 
-function renderHighscores() {
-    var storedHighscores = JSON.parse(localStorage.getItem("highscores"));
-    for (var i = 0; i < storedHighscores.length; i++) {
-        var p = document.querySelector("p");
-        p.textContent = storedHighscores[i].initials + ": " + storedHighscores[i].score;
-        h1El.append(p);
-    }
-}
+// function renderHighscores() {
+//     var storedHighscores = JSON.parse(localStorage.getItem("highscores"));
+//     for (var i = 0; i < storedHighscores.length; i++) {
+//         var p = document.querySelector("p");
+//         p.textContent = storedHighscores[i].initials + ": " + storedHighscores[i].score;
+//         h1El.append(p);
+//     }
+// }
 
 // changes the elements on the page and creates question 1
 function makeQuestion1() {
@@ -158,27 +158,27 @@ function makeInputForm() {
     getInput();
 }
 
-function makeHighscores() {
-    h1El.textContent = "Highscores";
-    document.querySelector("input").remove();
-    document.querySelector("form").remove();
-    document.querySelector("button").remove();
-    var goBack = document.createElement("button");
-    var clear = document.createElement("button");
-    goBack.textContent = "go back";
-    clear.textContent = "clear highscores";
-    section.append(goBack);
-    section.append(clear);
-    renderHighscores();
-    goBack.addEventListener("click", function() {
-        makeStartScreen();
-    });
+// function makeHighscores() {
+//     h1El.textContent = "Highscores";
+//     document.querySelector("input").remove();
+//     document.querySelector("form").remove();
+//     document.querySelector("button").remove();
+//     var goBack = document.createElement("button");
+//     var clear = document.createElement("button");
+//     goBack.textContent = "go back";
+//     clear.textContent = "clear highscores";
+//     section.append(goBack);
+//     section.append(clear);
+//     renderHighscores();
+//     goBack.addEventListener("click", function() {
+//         makeStartScreen();
+//     });
     
-    clear.addEventListener("click", function() {
-        highscores.splice(0, highscores.length());
-        renderHighscores();
-    });
-}
+//     clear.addEventListener("click", function() {
+//         highscores.splice(0, highscores.length());
+//         renderHighscores();
+//     });
+// }
 
 function makeStartScreen() {
     timeLeft = 60;
@@ -210,8 +210,15 @@ function getInput() {
         };
         highscores.push(highscore);
         localStorage.setItem("highscores", JSON.stringify(highscores));
-        makeHighscores();
+        location.href = "highscores.html";
     });
+}
+
+function init() {
+    var storedHighscores = JSON.parse(localStorage.getItem("highscores"));
+    if (storedHighscores !== null) {
+        highscores = storedHighscores;
+    }
 }
 
 // checks what the users answer was for question 1
@@ -312,6 +319,8 @@ function countdown() {
         
     }, 1000);
 }
+
+init();
 
 // sends user to html page of the first javascript question
 document.querySelector("#start-button").addEventListener("click", function() {

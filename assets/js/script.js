@@ -6,7 +6,7 @@ var timerEL = document.querySelector("#countdown");
 var viewHighscoreEl = document.querySelector("#highscores");
 var questionIndex = 0;
 var wrong = false;
-highscores = [];
+var highscores = [];
 var timeLeft = 60;
 
 // the button clicked in question 1 is wrong
@@ -173,6 +173,15 @@ function getInput() {
     });
 }
 
+// stores the stored highscores into the highscores array
+function init() {
+    var storedHighscores = JSON.parse(localStorage.getItem("highscores"));
+
+    if (storedHighscores !== null) {
+        highscores = storedHighscores;
+    }
+}
+
 // checks what the users answer was for question 1
 function question1Answer() {
     var questionOptionA = document.querySelector("#btn1");
@@ -271,6 +280,8 @@ function countdown() {
         
     }, 1000);
 }
+
+init();
 
 // sends user to html page of the first javascript question
 startButtonEL.addEventListener("click", function() {

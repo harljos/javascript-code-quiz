@@ -1,15 +1,15 @@
 var highscoreEl = document.querySelector("#stored-highscores");
 var clearHighscoresEl = document.querySelector("#clear");
 var goBackEl = document.querySelector("#go-back");
-highscores = [];
+var highscores = [];
 
 // displays the highscores the page
 function displayHighscores() {
-    var storedHighscores = JSON.parse(localStorage.getItem("highscores"));
     for (var i = 0; i < highscores.length; i++) {
         var p = document.createElement("p");
-        p.style.width = "100px";
-        p.textContent = highscores[i].initials + ": " + highscores[i].score;
+        p.style.width = "500px";
+        p.style.backgroundColor = "#f5b642";
+        p.textContent = i + 1 + ". " + highscores[i].initials + ": " + highscores[i].score;
         highscoreEl.append(p);
     }
 }
@@ -34,4 +34,5 @@ goBackEl.addEventListener("click", function() {
 // when you click clear highscores it clears highscores
 clearHighscoresEl.addEventListener("click", function() {
     highscoreEl.innerHTML = "";
+    localStorage.clear("highscores");
 });
